@@ -150,9 +150,8 @@ class Score:
         """
 
         self.font = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30) #フォント文字
-        self.color = (0, 0, 225)#青色
         self.score = 0
-        self.img = self.font.render(f"Score: {self.score}", True, self.color)#スコア画像
+        self.img = self.font.render(f"Score: {self.score}", True, (0, 0, 255))#スコア画像
         self.rct = self.img.get_rect()
         self.rct.center  = (100, HEIGHT - 50)#画像左下
 
@@ -161,7 +160,7 @@ class Score:
         """
         スコアを更新し、画面に表示する
         """
-        self.img = self.font.render(f"Score: {self.score}", True, self.color) #スコア画像更新 
+        self.img = self.font.render(f"Score: {self.score}", True, (0, 0, 255)) #スコア画像更新 
         screen.blit(self.img, self.rct)#スクリーン表示
 
 
