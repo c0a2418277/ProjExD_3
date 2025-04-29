@@ -176,6 +176,7 @@ def main():
     # bomb = Bomb((255, 0, 0), 10)
     bombs = [Bomb((225, 0, 0),10)for _ in range(NUM_OF_BOMBS)]
     score = Score()
+    beam = []
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -206,6 +207,8 @@ def main():
                         bombs[j] = None
                         bird.change_img(6, screen)
                         score.score += 1
+                        
+            
                 bombs = [bomb for bomb in bombs if bomb is not None]
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
