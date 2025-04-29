@@ -140,6 +140,30 @@ class Bomb:
             self.vy *= -1
         self.rct.move_ip(self.vx, self.vy)
         screen.blit(self.img, self.rct)
+class Score:
+    """
+    スコアに関するクラス
+    """
+    def __init__(self):
+        """"
+        フォント設定、文字色設定、スコア初期値設定、初期表示surface作成
+        """
+
+        self.font = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30) #フォント文字
+        self.color = (0, 0, 225)#青色
+        self.score = 0
+        self.img = self.font.render(f"Score: {self.score}", True, self.color)#スコア画像
+        self.rct = self.img.get_rect()
+        self.rct.center  = (100, HEIGHT - 50)#画像左下
+
+        
+    def update(self, screen: pg.Surface):
+        """
+        スコアを更新し、画面に表示する
+        """
+        self.img = self.font.render(f"Score: {self.score}", True, self.color) #スコア画像更新 
+        screen.blit(self.img, self.rct)#スクリーン表示
+
 
 
 def main():
@@ -147,9 +171,11 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))    
     bg_img = pg.image.load("fig/pg_bg.jpg")
     bird = Bird((300, 200))
+    score = Score() #スコアを初期化
     beam = None
     # bomb = Bomb((255, 0, 0), 10)
     bombs = [Bomb((225, 0, 0),10)for _ in range(NUM_OF_BOMBS)]
+    score = Score()
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -174,11 +200,12 @@ def main():
         # if beam is not None:
             # if bomb is not None:
             for j, bomb in enumerate(bombs):
-                if beam is not None:
+                if beam is not None :
                     if beam.rct.colliderect(bomb.rct):
                         beam = None
                         bombs[j] = None
                         bird.change_img(6, screen)
+                        score.score += 1
                 bombs = [bomb for bomb in bombs if bomb is not None]
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
@@ -187,7 +214,7 @@ def main():
         
         for bomb in bombs:
                 bomb.update(screen)
-        
+        score.update(screen)
         pg.display.update()
         tmr += 1
         clock.tick(50)
